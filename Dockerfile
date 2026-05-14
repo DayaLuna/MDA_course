@@ -7,4 +7,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 
-CMD streamlit run Dashboard/Interactive_dashboard.py --server.port $PORT --server.address 0.0.0.0
+CMD streamlit run Dashboard/Interactive_dashboard.py --server.port 8080 --server.address 0.0.0.0
