@@ -14,7 +14,7 @@ model = lgb.Booster(model_file=os.path.join(directory, "cycling_model.txt"))
 print(model.pandas_categorical)
 pandas_cat = model.pandas_categorical
 
-sites = pd.read_csv(os.path.join(directory, "sites.csv"), header=None, sep=None, engine="python")
+sites = pd.read_csv(os.path.join(directory, "sites.csv"), sep=",", header=None, skipinitialspace=True)
 sites.columns = [
     "index", "siteID", "long_site", "lat_site", "name", "operator",
     "road", "district", "municipality", "interval", "date"
