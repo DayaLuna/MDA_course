@@ -4,6 +4,7 @@ import lightgbm as lgb
 import pydeck as pdk
 import numpy as np
 import os
+import gdown
 
 st.set_page_config(layout="wide")
 st.title("Cycling Traffic Predictor")
