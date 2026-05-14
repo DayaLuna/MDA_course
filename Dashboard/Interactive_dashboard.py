@@ -149,14 +149,14 @@ sites_m["delta"]    = np.round(scenario - baseline, 1)
 
 # red if delta > 2, green if delta < -2, blue if normal
 sites_m["color"] = [
-    [200, 30,  30] if row["delta"] >  2 else
-    [0,  180,   0] if row["delta"] < -2 else
+    [200, 30,  30] if row["scenario"] > row["count_mean"] + row["count_std"] else
+    [0,  180,   0] if row["scenario"] < row["count_mean"] - row["count_std"] else
     [30, 100, 200]
     for _, row in sites_m.iterrows()
 ]
 
 # map
-st.write("🔴 Much higher than baseline  🟢 Much lower than baseline  🔵 Similar to baseline")
+st.write("🔴 Unusually High Traffic  🟢 Unusually Low Traffic  🔵 Usual Traffic")
 
 st.pydeck_chart(pdk.Deck(
     layers=[pdk.Layer(
