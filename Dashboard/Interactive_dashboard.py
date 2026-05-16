@@ -151,6 +151,7 @@ sites_m["delta"]    = np.round(scenario - baseline, 1)
 sites_m["color"] = [
     [200, 30,  30] if row["delta"] >  2 else
     [0,  180,   0] if row["delta"] < -2 else
+    [30, 100, 200]
     for _, row in sites_m.iterrows()
 ]
 
