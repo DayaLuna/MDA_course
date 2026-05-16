@@ -114,11 +114,8 @@ def build_features(df_sites, hour, weekend, rain, temp, sun, month):
     return f[expected].to_numpy(dtype=float)
 
 
-# baseline is average weather, hour=12, weekday, no rain ───
+# baseline is average weather, hour=12, weekday, no rain
 weather_row = weather_stats[weather_stats["month"] == month].iloc[0]
-
-st.write("baseline temp used:", float(weather_row["temp_dry_shelter_avg"]))
-st.write("baseline hour used: 12")
 
 baseline_features = build_features(
     sites_m,
