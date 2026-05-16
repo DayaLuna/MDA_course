@@ -16,4 +16,4 @@ This project builds a machine learning model to predict cycling traffic across c
 
 A LightGBM model is trained on 2024 data and validated on 2025 data.
 
-The results are visualised in an interactive Streamlit dashboard.
+The results are visualised in an interactive Streamlit dashboard. https://mdacourse-qgfhxqnhavjt6tvdmym9y5.streamlit.app/
