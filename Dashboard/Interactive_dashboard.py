@@ -4,6 +4,7 @@ import lightgbm as lgb
 import pydeck as pdk
 import numpy as np
 import os
+import gdown
 
 st.set_page_config(layout="wide")
 st.title("Cycling Traffic Predictor")
@@ -25,7 +26,8 @@ sites.columns = [
 
 @st.cache_data
 def load_training_stats():
-    df = pd.read_csv(os.path.join(directory, "merged_data.csv"))
+    gdown.download("https://drive.google.com/uc?id=1Su0gNS2v7P6Mq4dEGf40tEvGs0FrzI-v", "/tmp/merged_data.csv", quiet=False)
+    df = pd.read_csv("/tmp/merged_data.csv")
 
     site_stats = (
         df.groupby(["siteID", "month"])["count"]
@@ -154,7 +156,7 @@ sites_m["color"] = [
 ]
 
 # map
-st.write("🔴 Much higher than baseline  🟢 Much lower than baseline  🔵 Similar to baseline")
+st.write("🔴 Unusually High Traffic  🟢 Unusually Low Traffic  🔵 Usual Traffic")
 
 st.pydeck_chart(pdk.Deck(
     layers=[pdk.Layer(
