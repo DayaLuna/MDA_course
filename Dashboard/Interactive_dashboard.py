@@ -74,7 +74,7 @@ sites_m["count_std"]  = sites_m["count_std"].fillna(1)
 
 # constructing the features
 def build_features(df_sites, hour, weekend, rain, temp, sun, month):
-    f = df_sites[["siteID", "municipality", "long_site", "lat_site"]].copy()
+    f = df_sites[["siteID", "municipality"]].copy()
 
     season_val = season_lookup.loc[
         season_lookup["month"] == month, "season"
