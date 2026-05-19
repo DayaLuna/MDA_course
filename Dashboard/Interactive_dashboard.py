@@ -144,10 +144,10 @@ sites_m["baseline"] = np.round(baseline, 1)
 sites_m["scenario"] = np.round(scenario, 1)
 sites_m["delta"]    = np.round(scenario - baseline, 1)
 
-# red if delta > 2, green if delta < -2, blue if normal
+# red if delta > 10, green if delta < -10, blue if normal
 sites_m["color"] = [
-    [200, 30,  30] if row["delta"] >  2 else
-    [0,  180,   0] if row["delta"] < -2 else
+    [200, 30,  30] if row["delta"] >  10 else
+    [0,  180,   0] if row["delta"] < -10 else
     [30, 100, 200]
     for _, row in sites_m.iterrows()
 ]
