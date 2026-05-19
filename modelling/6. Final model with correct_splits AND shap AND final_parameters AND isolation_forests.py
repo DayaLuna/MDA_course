@@ -117,10 +117,12 @@ print("Train-test gap:", gap)
 print("Baseline Poisson deviance:", baseline_dev)
 print("LightGBM Poisson deviance:", pois_dev)
 
+# SHAP with subsampling
+X_test_sample = X_test.sample(n=100000, random_state=42)
 explainer = shap.TreeExplainer(model)
-shap_values = explainer.shap_values(X_test)
+shap_values = explainer.shap_values(X_test_sample)
 
-shap.summary_plot(shap_values, X_test, show=False)
+shap.summary_plot(shap_values, X_test_sample, show=False)
 plt.savefig("shap_summary.jpg", dpi=300, bbox_inches="tight")
 plt.show()
 
