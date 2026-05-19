@@ -22,20 +22,19 @@ sites.columns = [
 ]
 
 
-
-
 @st.cache_data
 def load_training_stats():
-    gdown.download("https://drive.google.com/uc?id=1Su0gNS2v7P6Mq4dEGf40tEvGs0FrzI-v", "/tmp/merged_data.csv", quiet=False)
-    df = pd.read_csv("/tmp/merged_data.csv")
+    temp_path = os.path.join(directory, "merged_data.csv")
 
-    site_stats = (
-        df.groupby(["siteID", "month"])["count"]
-        .agg(["mean", "std"])
-        .reset_index()
+    gdown.download(
+        "https://drive.google.com/uc?id=1Su0gNS2v7P6Mq4dEGf40tEvGs0FrzI-v",
+        temp_path,
+        quiet=False
     )
-    site_stats.columns = ["siteID", "month", "count_mean", "count_std"]
-    site_stats["count_std"] = site_stats["count_std"].fillna(1)
+
+    df = pd.read_csv(temp_path)
+
+    valid_sites = df[["siteID", "municipality","accessibility_index", "n_nearby_stops"]].drop_duplicates()
 
     weather_stats = (
         df.groupby("month")[["temp_dry_shelter_avg", "sun_duration"]]
@@ -49,10 +48,10 @@ def load_training_stats():
         .reset_index()
     )
 
-    return site_stats, weather_stats, season_lookup
+    return valid_sites, weather_stats, season_lookup
 
 
-site_stats, weather_stats, season_lookup = load_training_stats()
+valid_sites, weather_stats, season_lookup = load_training_stats()
 
 # sidebars, dropdown menus
 month   = st.sidebar.slider("Month", 1, 12, 6)
@@ -66,15 +65,16 @@ sun     = st.sidebar.slider("Sun duration (min)", 0, 60, 0, step=1)
 
 # merge
 sites_m = sites.merge(
-    site_stats[site_stats["month"] == month],
-    on="siteID", how="left"
+    valid_sites,
+    on=["siteID", "municipality"],
+    how="inner"
 )
-sites_m["count_mean"] = sites_m["count_mean"].fillna(0)
-sites_m["count_std"]  = sites_m["count_std"].fillna(1)
 
 # constructing the features
 def build_features(df_sites, hour, weekend, rain, temp, sun, month):
-    f = df_sites[["siteID", "municipality"]].copy()
+    f = df_sites[
+        ["siteID", "municipality", "long_site", "lat_site", "accessibility_index", "n_nearby_stops"]
+    ].copy()
 
     season_val = season_lookup.loc[
         season_lookup["month"] == month, "season"
@@ -98,7 +98,7 @@ def build_features(df_sites, hour, weekend, rain, temp, sun, month):
     f["mnth_sin"] = np.sin((month - 1) * (2 * np.pi / 12))
     f["mnth_cos"] = np.cos((month - 1) * (2 * np.pi / 12))
 
-    # Scalar features
+    # other features
     f["weekend"]              = int(weekend)
     f["rain"]                 = int(rain)
     f["temp_dry_shelter_avg"] = float(temp)
