@@ -20,12 +20,12 @@ y_train = data_train["count"]
 y_test = data_test["count"]
 
 X_train = data_train.drop(
-    columns=["count", "start_date", "date", "hour", "month", "long", "lat"],
+    columns=["count", "start_date", "date", "hour", "month"],
     errors="ignore"
 )
 
 X_test = data_test.drop(
-    columns=["count", "start_date", "date", "hour", "month", "long", "lat"],
+    columns=["count", "start_date", "date", "hour", "month"],
     errors="ignore"
 )
 

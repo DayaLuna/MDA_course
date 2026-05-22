@@ -31,10 +31,13 @@ y_test = data_test["count"]
 
 X_train = data_train.drop(columns=[
     "count", "start_date", "date", 
-    "hour", "month", "long", "lat"
-], errors="ignore")
+    "hour", "month"
+])
 
-
+X_test = data_train.drop(columns=[
+    "count", "start_date", "date",
+    "hour", "month"
+])
 
 # define/prepare categorical variables
 cat_feature = ["siteID", "municipality", "season"]

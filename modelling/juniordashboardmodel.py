@@ -20,13 +20,11 @@ y_train = data_train["count"]
 y_test = data_test["count"]
 
 X_train = data_train.drop(
-    columns=["count", "start_date", "date", "hour", "month", "long", "lat"],
-    errors="ignore"
+    columns=["count", "start_date", "date", "hour", "month"]
 )
 
 X_test = data_test.drop(
-    columns=["count", "start_date", "date", "hour", "month", "long", "lat"],
-    errors="ignore"
+    columns=["count", "start_date", "date", "hour", "month"]
 )
 
 cat_feature = ["siteID", "municipality", "season"]
