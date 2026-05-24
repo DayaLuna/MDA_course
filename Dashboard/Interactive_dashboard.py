@@ -103,14 +103,9 @@ def build_features(df_sites, hour, weekend, rain, temp, sun, month):
     f["rain"]                 = int(rain)
     f["temp_dry_shelter_avg"] = float(temp)
     f["sun_duration"]         = float(sun)
-    f["outlier_flag"]         = 0
 
-    # fill any missing with 0
+    # keep order
     expected = model.feature_name()
-    for col in expected:
-        if col not in f.columns:
-            f[col] = 0
-
     return f[expected].to_numpy(dtype=float)
 
 
