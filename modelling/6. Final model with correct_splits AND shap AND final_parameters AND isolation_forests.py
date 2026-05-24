@@ -5,7 +5,7 @@ from sklearn.metrics import mean_poisson_deviance
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import shap
-from sklearn.ensemble import IsolationForest
+#from sklearn.ensemble import IsolationForest
 
 data_train = pd.read_csv(r"Datasets for features\merged_data.csv")
 data_test = pd.read_csv(r"Datasets for features\merged_data_test.csv")
@@ -45,25 +45,25 @@ X_val, X_test, y_val, y_test = train_test_split(
 )
 
 # isolation forest outlier flag
-num_cols = X_train.select_dtypes(include=["number"]).columns
+# num_cols = X_train.select_dtypes(include=["number"]).columns
 
-iso = IsolationForest(
-    contamination=0.01,
-    random_state=42,
-    n_jobs=-1
-)
+#iso = IsolationForest(
+#    contamination=0.01,
+#    random_state=42,
+#    n_jobs=-1
+#)
 
-train_outliers = iso.fit_predict(X_train[num_cols])
-val_outliers = iso.predict(X_val[num_cols])
-test_outliers = iso.predict(X_test[num_cols])
+#train_outliers = iso.fit_predict(X_train[num_cols])
+#val_outliers = iso.predict(X_val[num_cols])
+#test_outliers = iso.predict(X_test[num_cols])
 
-X_train["outlier_flag"] = (train_outliers == -1).astype(int)
-X_val["outlier_flag"] = (val_outliers == -1).astype(int)
-X_test["outlier_flag"] = (test_outliers == -1).astype(int)
+#X_train["outlier_flag"] = (train_outliers == -1).astype(int)
+#X_val["outlier_flag"] = (val_outliers == -1).astype(int)
+#X_test["outlier_flag"] = (test_outliers == -1).astype(int)
 
-print("Training outliers detected:", (train_outliers == -1).sum())
-print("Validation outliers detected:", (val_outliers == -1).sum())
-print("Test outliers detected:", (test_outliers == -1).sum())
+#print("Training outliers detected:", (train_outliers == -1).sum())
+#print("Validation outliers detected:", (val_outliers == -1).sum())
+#print("Test outliers detected:", (test_outliers == -1).sum())
 
 tr_data = lgb.Dataset(
     X_train,
